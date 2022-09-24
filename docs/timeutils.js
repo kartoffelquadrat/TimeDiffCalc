@@ -31,12 +31,22 @@ function registerElementListeners() {
             clearAndReset()
         }
     };
+
+    // Reset history on key press
+    document.getElementById('reset-history').addEventListener("click", function (e) {
+        resetHistory();
+    });
 }
 
 async function updateDiffField(keyEvent, jumpOnTab) {
 
     let content = await produceTimeDelta();
     document.getElementById('result-diff-minutes').value = content;
+}
+
+function resetHistory() {
+
+    document.getElementById("hx").innerHTML = "";
 }
 
 /**
@@ -76,11 +86,19 @@ async function produceTimeDelta() {
     let universalEndMinutes = 60 * parseInt(endHours) + parseInt(endMinutes);
 
     let diff = Math.abs(universalEndMinutes - universalStartMinutes)
-    last_start = "Start: " + startHours + ":" + startMinutes
-    last_end = "End: " + endHours + ":" + endMinutes
-    last_diff = "Diff: " + diff;
+    last_start = "Start: " + startHours + ":" + addPadding(startMinutes)
+    last_end = "End: " + endHours + ":" + addPadding(endMinutes)
+    last_diff = "Diff: " + addPadding(diff);
     return diff;
 }
+
+function addPadding(string) {
+    if (string.length == 1) {
+        return "0" + string;
+    }
+    return string;
+}
+
 
 /**
  * Helper function to test if string is positive integer
