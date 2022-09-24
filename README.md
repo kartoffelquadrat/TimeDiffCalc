@@ -15,6 +15,11 @@ This repo hosts a little helper calculator webpage written in plain HTML and Jav
  * If needed, add to iOS HomeScreen via sharing shortcut, to get an eternal app.  
 There is no remotely changing content, so the static page contents will work offline.
 
+### Key Combos
+
+ * Use "Tab" to iterate over fields.
+ * Hit "Esc" memorize and start over.
+
 ## Contact / Pull Requests
 
  * Author: Maximilian Schiedermeier ![email](email.png)
