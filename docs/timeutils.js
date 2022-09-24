@@ -2,16 +2,16 @@ function registerElementListeners() {
 
     // Update on any keystroke in input field (no return press required)
     document.getElementById('start-time-hours-field').addEventListener("keypress", function (e) {
-        updateDiffField(e)
+        updateDiffField()
     });
     document.getElementById('start-time-minutes-field').addEventListener("keypress", function (e) {
-        updateDiffField(e)
+        updateDiffField()
     });
     document.getElementById('end-time-hours-field').addEventListener("keypress", function (e) {
-        updateDiffField(e)
+        updateDiffField()
     });
     document.getElementById('end-time-minutes-field').addEventListener("keypress", function (e) {
-        updateDiffField(e)
+        updateDiffField()
     });
 
     // Reset on esc pressed
@@ -29,7 +29,8 @@ function registerElementListeners() {
     };
 }
 
-async function updateDiffField() {
+async function updateDiffField(keyEvent, jumpOnTab) {
+
     let content = await produceTimeDelta();
     document.getElementById('result-diff-minutes').value = content;
 }
@@ -67,8 +68,8 @@ async function produceTimeDelta() {
     }
 
     // Convert everything to minutes only
-    let universalStartMinutes = 60 * startHours + startMinutes;
-    let universalEndMinutes = 60 * endHours + endMinutes;
+    let universalStartMinutes = 60 * parseInt(startHours) + parseInt(startMinutes);
+    let universalEndMinutes = 60 * parseInt(endHours) + parseInt(endMinutes);
 
     return Math.abs(universalEndMinutes - universalStartMinutes)
 }
