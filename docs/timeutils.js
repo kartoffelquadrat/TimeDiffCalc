@@ -29,12 +29,24 @@ function registerElementListeners() {
     };
 }
 
-function updateDiffField() {
-    let content = produceTimeDelta();
+async function updateDiffField() {
+    let content = await produceTimeDelta();
     document.getElementById('result-diff-minutes').value = content;
 }
 
-function produceTimeDelta() {
+/**
+ * https://stackoverflow.com/a/39914235
+ * @param ms
+ * @returns {Promise<unknown>}
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function produceTimeDelta() {
+
+    // Wait a fraction of a second, so the filed value is actually updated
+    await sleep(50);
 
     // verify all required information is there
     let startHours = document.getElementById('start-time-hours-field').value;
@@ -44,11 +56,13 @@ function produceTimeDelta() {
 
     // If anything is empty, abort
     if (startHours === "" || startMinutes === "" || endHours === "" || endMinutes === "") {
+        console.log("At least one input filed empty")
         return "---";
     }
 
     // If anything is not a number, abort
     if (isNoPositiveInteger(startHours) || isNoPositiveInteger(startMinutes) || isNoPositiveInteger(endHours) || isNoPositiveInteger(endMinutes)) {
+        console.log("At least one input field not greater equal 0")
         return "---";
     }
 
@@ -72,7 +86,7 @@ function isNoPositiveInteger(str) {
 
     const num = Number(str);
 
-    if (Number.isInteger(num) && num > 0) {
+    if (Number.isInteger(num) && num >= 0) {
         return false;
     }
 
