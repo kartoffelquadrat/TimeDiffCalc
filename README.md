@@ -18,7 +18,7 @@ There is no remotely changing content, so the static page contents will work off
 ### Key Combos
 
  * Use "Tab" to iterate over fields.
- * Hit "Esc" memorize and start over.
+ * Hit "Enter" memorize and start over.
 
 ## Contact / Pull Requests
 
