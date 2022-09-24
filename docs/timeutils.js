@@ -13,9 +13,6 @@ function registerElementListeners() {
     document.getElementById('end-time-minutes-field').addEventListener("keypress", function (e) {
         updateDiffField(e)
     });
-    document.getElementById('end-time-minutes-field').addEventListener("keypress", function (e) {
-        updateDiffField(e)
-    });
 
     // Reset on esc pressed
     document.onkeydown = function (evt) {
@@ -32,9 +29,54 @@ function registerElementListeners() {
     };
 }
 
-function updateDiffField(e) {
-    // verify all required information is there
+function updateDiffField() {
+    let content = produceTimeDelta();
+    document.getElementById('result-diff-minutes').value = content;
+}
 
+function produceTimeDelta() {
+
+    // verify all required information is there
+    let startHours = document.getElementById('start-time-hours-field').value;
+    let startMinutes = document.getElementById('start-time-minutes-field').value;
+    let endHours = document.getElementById('end-time-hours-field').value;
+    let endMinutes = document.getElementById('end-time-minutes-field').value;
+
+    // If anything is empty, abort
+    if (startHours === "" || startMinutes === "" || endHours === "" || endMinutes === "") {
+        return "---";
+    }
+
+    // If anything is not a number, abort
+    if (isNoPositiveInteger(startHours) || isNoPositiveInteger(startMinutes) || isNoPositiveInteger(endHours) || isNoPositiveInteger(endMinutes)) {
+        return "---";
+    }
+
+    // Convert everything to minutes only
+    let universalStartMinutes = 60 * startHours + startMinutes;
+    let universalEndMinutes = 60 * endHours + endMinutes;
+
+    return Math.abs(universalEndMinutes - universalStartMinutes)
+}
+
+/**
+ * Helper function to test if string is positive integer
+ * See: https://bobbyhadz.com/blog/javascript-check-if-string-is-positive-integer
+ * @param str
+ * @returns {boolean}
+ */
+function isNoPositiveInteger(str) {
+    if (typeof str !== 'string') {
+        return true;
+    }
+
+    const num = Number(str);
+
+    if (Number.isInteger(num) && num > 0) {
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -48,7 +90,6 @@ function clearAndReset() {
     document.getElementById('start-time-hours-field').value = "";
     document.getElementById('start-time-minutes-field').value = "";
     document.getElementById('end-time-hours-field').value = "";
-    document.getElementById('end-time-minutes-field').value = "";
     document.getElementById('end-time-minutes-field').value = "";
 
     // Focus back to first field
