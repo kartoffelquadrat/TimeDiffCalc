@@ -9,6 +9,12 @@ The procedure is to fast forward through the video, identify the time markers wh
 This repo hosts a little helper calculator webpage written in plain HTML and JavaScript.
 
 
+## Usage
+
+ * Open in [browser](https://kartoffelquadrat.github.io/TimeDiffCalc/).   
+ * If needed, add to iOS HomeScreen via sharing shortcut, to get an eternal app.  
+There is no remotely changing content, so the static page contents will work offline.
+
 ## Contact / Pull Requests
 
  * Author: Maximilian Schiedermeier ![email](email.png)
