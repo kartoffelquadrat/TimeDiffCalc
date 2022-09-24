@@ -2,46 +2,54 @@ let last_start;
 let last_end;
 let last_diff;
 
+let start_time_hours_field;
+let start_time_minutes_field;
+let end_time_hours_field;
+let end_time_minutes_field;
+let offset_time_hours_field;
+let offset_time_minutes_field;
+let reset_history_button;
+let result_diff_field;
+
 function registerElementListeners() {
 
-    // Update on any keystroke in input field (no return press required)
-    document.getElementById('start-time-hours-field').addEventListener("keypress", function (e) {
-        updateDiffField()
-    });
-    document.getElementById('start-time-minutes-field').addEventListener("keypress", function (e) {
-        updateDiffField()
-    });
-    document.getElementById('end-time-hours-field').addEventListener("keypress", function (e) {
-        updateDiffField()
-    });
-    document.getElementById('end-time-minutes-field').addEventListener("keypress", function (e) {
-        updateDiffField()
-    });
+    start_time_hours_field = document.getElementById('start-time-hours-field');
+    start_time_minutes_field = document.getElementById('start-time-minutes-field');
+    end_time_hours_field = document.getElementById('end-time-hours-field');
+    end_time_minutes_field = document.getElementById('end-time-minutes-field');
+    offset_time_hours_field = document.getElementById('offset-time-hours-field');
+    offset_time_minutes_field = document.getElementById('offset-time-minutes-field');
+    reset_history_button = document.getElementById('reset-history');
+    result_diff_field = document.getElementById('result-diff-minutes');
 
-    // Reset on esc pressed
-    document.onkeydown = function (evt) {
+    // Add listener for special key presses
+    // //Reset on enter pressed
+    document.onkeydown = async function (evt) {
         evt = evt || window.event;
-        let isEscape = false;
-        if ("key" in evt) {
-            isEscape = (evt.key === "Enter" || evt.key === "enter");
-        } else {
-            isEscape = (evt.keyCode === 13);
-        }
-        if (isEscape) {
+        if (evt.keyCode === 13) {
             clearAndReset()
         }
+        // on every other key press update numbers without reset
+        else {
+            console.log("non enter press");
+            await updateDiffField();
+        }
+
     };
 
     // Reset history on key press
-    document.getElementById('reset-history').addEventListener("click", function (e) {
+    reset_history_button.addEventListener("click", function (e) {
         resetHistory();
     });
 }
 
 async function updateDiffField(keyEvent, jumpOnTab) {
 
+    // Update diff field if possible
     let content = await produceTimeDelta();
-    document.getElementById('result-diff-minutes').value = content;
+    result_diff_field.value = content;
+
+    // Add padding where possible
 }
 
 function resetHistory() {
@@ -64,10 +72,13 @@ async function produceTimeDelta() {
     await sleep(50);
 
     // verify all required information is there
-    let startHours = document.getElementById('start-time-hours-field').value;
-    let startMinutes = document.getElementById('start-time-minutes-field').value;
-    let endHours = document.getElementById('end-time-hours-field').value;
-    let endMinutes = document.getElementById('end-time-minutes-field').value;
+    let startHours = start_time_hours_field.value;
+    let startMinutes = start_time_minutes_field.value;
+    let endHours = end_time_hours_field.value;
+    let endMinutes = end_time_minutes_field.value;
+
+    // Pad everything that can be padded (integer and not focused)
+    padInputFields();
 
     // If anything is empty, abort
     if (startHours === "" || startMinutes === "" || endHours === "" || endMinutes === "") {
@@ -86,13 +97,13 @@ async function produceTimeDelta() {
     let universalEndMinutes = 60 * parseInt(endHours) + parseInt(endMinutes);
 
     let diff = Math.abs(universalEndMinutes - universalStartMinutes)
-    last_start = "Start: " + startHours + ":" + addPadding(startMinutes)
-    last_end = "End: " + endHours + ":" + addPadding(endMinutes)
-    last_diff = "Diff: " + addPadding(diff);
+    last_start = "Start: " + startHours + ":" + addStringPadding(startMinutes)
+    last_end = "End: " + endHours + ":" + addStringPadding(endMinutes)
+    last_diff = "Diff: " + addStringPadding(diff);
     return diff;
 }
 
-function addPadding(string) {
+function addStringPadding(string) {
     if (string.length == 1) {
         return "0" + string;
     }
@@ -128,11 +139,13 @@ function clearAndReset() {
     addToHistory()
 
     // Clear all input fields
-    document.getElementById('start-time-hours-field').value = "";
-    document.getElementById('start-time-minutes-field').value = "";
-    document.getElementById('end-time-hours-field').value = "";
-    document.getElementById('end-time-minutes-field').value = "";
-    document.getElementById('result-diff-minutes').value = "---";
+    start_time_hours_field.value = "";
+    start_time_minutes_field.value = "";
+    end_time_hours_field.value = "";
+    end_time_minutes_field.value = "";
+    offset_time_hours_field.value = "00";
+    offset_time_minutes_field.value = "00";
+    result_diff_field.value = "---";
 
     // Focus back to first field
     document.getElementById('start-time-hours-field').focus();
@@ -161,4 +174,36 @@ function addToHistory() {
         // add container to history section
         document.getElementById("hx").appendChild(marker_container)
     }
+}
+
+
+function padInputFields() {
+
+    let startHours = start_time_hours_field.value;
+    let startMinutes = start_time_minutes_field.value;
+    let endHours = end_time_hours_field.value;
+    let endMinutes = end_time_minutes_field.value;
+
+    // Add leading zeros to any non focused field
+    if (!isNoPositiveInteger(startHours) && !isElementFocused(start_time_hours_field)) {
+        start_time_hours_field.value = addStringPadding(startHours);
+    }
+    if (!isNoPositiveInteger(startMinutes) && !isElementFocused(end_time_minutes_field)) {
+        start_time_minutes_field.value = addStringPadding(startMinutes);
+    }
+    if (!isNoPositiveInteger(endHours) && !isElementFocused(end_time_hours_field)) {
+        end_time_hours_field.value = addStringPadding(endHours);
+    }
+    if (!isNoPositiveInteger(endMinutes) && !isElementFocused(end_time_minutes_field)) {
+        end_time_minutes_field.value = addStringPadding(endMinutes);
+    }
+}
+
+/**
+ * https://stackoverflow.com/a/36430896
+ */
+function isElementFocused(element) {
+
+// check for focus
+    return (document.activeElement === element);
 }
