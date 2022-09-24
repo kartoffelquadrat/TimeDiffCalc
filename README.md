@@ -5,7 +5,7 @@ Speeding up time marker analysis.
 ## About
 
 For my studies I need to analyze a many videos for time spent on given tasks.  
-The procedure is to fast forward through the video, identify the time markers where tasks alternate and note the time delta for the resulting intervals.  
+The procedure is to fast-forward through the video, identify the time markers where tasks alternate and note the time delta for the resulting intervals.  
 This repo hosts a little helper calculator webpage written in plain HTML and JavaScript.
 
 

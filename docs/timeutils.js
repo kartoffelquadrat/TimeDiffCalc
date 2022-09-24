@@ -33,10 +33,28 @@ function registerElementListeners() {
 }
 
 function updateDiffField(e) {
-
-    alert("A key was typed");
+    // verify all required information is there
 
 }
 
 
-clearAndReset
+function clearAndReset() {
+    console.log("Clear and reset called.")
+
+    // Add current values to history
+    addToHistory()
+
+    // Clear all input fields
+    document.getElementById('start-time-hours-field').value = "";
+    document.getElementById('start-time-minutes-field').value = "";
+    document.getElementById('end-time-hours-field').value = "";
+    document.getElementById('end-time-minutes-field').value = "";
+    document.getElementById('end-time-minutes-field').value = "";
+
+    // Focus back to first field
+    document.getElementById('start-time-hours-field').focus();
+}
+
+function addToHistory() {
+    console.log("adding to history...");
+}
