@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Time Diff Calc</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!--Support for iOS HomeScreen App shortcut-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, user-scalable=no, maximum-scale=1, minimum-scale=1"/>
+    <meta name="apple-mobile-web-app-title" content="Time Diff Calc">
+
+    <!-- Bootstrap and custom stylesheets-->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body onload="registerElementListeners()">
+<h2>Time Diff Calculator</h2>
+
+<form>
+    <label>Start Marker:</label><br>
+    <input type="text" id="start-time-hours-field" name="fname" value="John">
+    <input type="text" id="start-time-minutes-field" name="fname" value="John"><br>
+    <label>End Marker:</label><br>
+    <input type="text" id="end-time-hours-field" name="lname" value="Doe">
+    <input type="text" id="end-time-minutes-field" name="lname" value="Doe"><br>
+    <label>Time Diff:</label><br>
+    <input type="text" id="result-diff-hours" name="lname" value="Doe" disabled>
+    <input type="text" id="result-diff-minutes" name="lname" value="Doe" disabled><br>
+    <br/><input type="submit" value="Cache">
+</form>
+
+<h2>History</h2>
+
+
+</body>
+</html>
