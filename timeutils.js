@@ -9,3 +9,7 @@ function registerElementListeners() {
 function updateDiffField() {
     alert("A key was typed")
 }
+
+function addToHistory() {
+
+}
