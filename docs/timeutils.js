@@ -1,6 +1,7 @@
 let last_start;
 let last_end;
 let last_diff;
+let last_offset;
 
 let start_time_hours_field;
 let start_time_minutes_field;
@@ -27,6 +28,7 @@ function registerElementListeners() {
     document.onkeydown = async function (evt) {
         evt = evt || window.event;
         if (evt.keyCode === 13) {
+
             clearAndReset()
         }
         // on every other key press update numbers without reset
@@ -48,8 +50,6 @@ async function updateDiffField(keyEvent, jumpOnTab) {
     // Update diff field if possible
     let content = await produceTimeDelta();
     result_diff_field.value = content;
-
-    // Add padding where possible
 }
 
 function resetHistory() {
@@ -76,29 +76,50 @@ async function produceTimeDelta() {
     let startMinutes = start_time_minutes_field.value;
     let endHours = end_time_hours_field.value;
     let endMinutes = end_time_minutes_field.value;
+    let offsetHours = offset_time_hours_field.value;
+    let offsetMinutes = offset_time_minutes_field.value;
 
     // Pad everything that can be padded (integer and not focused)
     padInputFields();
 
     // If anything is empty, abort
-    if (startHours === "" || startMinutes === "" || endHours === "" || endMinutes === "") {
-        console.log("At least one input filed empty")
+    if (startHours === "" || startMinutes === "" || endHours === "" || endMinutes === "" || offsetHours === "" || offsetMinutes === "") {
+        console.log("At least one input field empty")
         return "---";
     }
 
-    // If anything is not a number, abort
+    // If any start / end is not a number, abort
     if (isNoPositiveInteger(startHours) || isNoPositiveInteger(startMinutes) || isNoPositiveInteger(endHours) || isNoPositiveInteger(endMinutes)) {
         console.log("At least one input field not greater equal 0")
         return "---";
     }
 
+    // If offset not empty and not a number, abort
+    if (offsetHours) {
+        if (isNoPositiveInteger(offsetHours)) {
+            return "---"
+        }
+    }
+    if (offsetMinutes) {
+        if (isNoPositiveInteger(offsetMinutes)) {
+            return "---"
+        }
+    }
+
     // Convert everything to minutes only
     let universalStartMinutes = 60 * parseInt(startHours) + parseInt(startMinutes);
     let universalEndMinutes = 60 * parseInt(endHours) + parseInt(endMinutes);
+    let universalOffsetMinutes = 0
+
+    if (offset_time_hours_field && offset_time_minutes_field) {
+        universalOffsetMinutes = 60 * parseInt(offsetHours) + parseInt(offsetMinutes);
+    }
 
     let diff = Math.abs(universalEndMinutes - universalStartMinutes)
+    diff = diff + universalOffsetMinutes;
     last_start = "Start: " + startHours + ":" + addStringPadding(startMinutes)
     last_end = "End: " + endHours + ":" + addStringPadding(endMinutes)
+    last_offset = "Offset: "+ offsetHours + ":" + addStringPadding(offsetMinutes);
     last_diff = "Diff: " + addStringPadding(diff);
     return diff;
 }
@@ -163,12 +184,15 @@ function addToHistory() {
         start_marker.innerText = last_start
         const end_marker = document.createElement('p')
         end_marker.innerText = last_end
+        const offset_marker = document.createElement('p')
+        offset_marker.innerText = last_offset
         const diff_marker = document.createElement('p')
         diff_marker.innerText = last_diff
 
         // add everything to container
         marker_container.appendChild(start_marker)
         marker_container.appendChild(end_marker)
+        marker_container.appendChild(offset_marker)
         marker_container.appendChild(diff_marker)
 
         // add container to history section
@@ -183,12 +207,14 @@ function padInputFields() {
     let startMinutes = start_time_minutes_field.value;
     let endHours = end_time_hours_field.value;
     let endMinutes = end_time_minutes_field.value;
+    let offsetHours = offset_time_hours_field.value;
+    let offsetMinutes = offset_time_minutes_field.value;
 
     // Add leading zeros to any non focused field
     if (!isNoPositiveInteger(startHours) && !isElementFocused(start_time_hours_field)) {
         start_time_hours_field.value = addStringPadding(startHours);
     }
-    if (!isNoPositiveInteger(startMinutes) && !isElementFocused(end_time_minutes_field)) {
+    if (!isNoPositiveInteger(startMinutes) && !isElementFocused(start_time_minutes_field)) {
         start_time_minutes_field.value = addStringPadding(startMinutes);
     }
     if (!isNoPositiveInteger(endHours) && !isElementFocused(end_time_hours_field)) {
@@ -196,6 +222,12 @@ function padInputFields() {
     }
     if (!isNoPositiveInteger(endMinutes) && !isElementFocused(end_time_minutes_field)) {
         end_time_minutes_field.value = addStringPadding(endMinutes);
+    }
+    if (!isNoPositiveInteger(offsetHours) && !isElementFocused(offset_time_hours_field)) {
+        offset_time_hours_field.value = addStringPadding(offsetHours);
+    }
+    if (!isNoPositiveInteger(offsetMinutes) && !isElementFocused(offset_time_minutes_field)) {
+        offset_time_minutes_field.value = addStringPadding(offsetMinutes);
     }
 }
 
