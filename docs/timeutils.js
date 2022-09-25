@@ -27,7 +27,7 @@ function registerElementListeners() {
     offset_time_minutes_field = document.getElementById('offset-time-minutes-field');
     offset_time_seconds_field = document.getElementById('offset-time-seconds-field');
     reset_history_button = document.getElementById('reset-history');
-    result_diff_field = document.getElementById('result-diff-minutes');
+    result_diff_field = document.getElementById('result-diff-seconds');
 
     // Add listener for special key presses
     // //Reset on enter pressed
@@ -94,29 +94,29 @@ async function produceTimeDelta() {
     // If anything is empty, abort
     if (startHours === "" || startMinutes === "" || startSeconds === "" || endHours === "" || endMinutes === "" || endSeconds === "" || offsetHours === "" || offsetMinutes === "" || offsetSeconds === "") {
         console.log("At least one input field empty")
-        return "---";
+        return "------";
     }
 
     // If any start / end is not a number, abort
     if (isNoPositiveInteger(startHours) || isNoPositiveInteger(startMinutes) || isNoPositiveInteger(startSeconds) || isNoPositiveInteger(endHours) || isNoPositiveInteger(endMinutes) || isNoPositiveInteger(endSeconds)) {
         console.log("At least one input field not greater equal 0")
-        return "---";
+        return "------";
     }
 
     // If offset not empty and not a number, abort
     if (offsetHours) {
         if (isNoPositiveInteger(offsetHours)) {
-            return "---"
+            return "------"
         }
     }
     if (offsetMinutes) {
         if (isNoPositiveInteger(offsetMinutes)) {
-            return "---"
+            return "------"
         }
     }
     if (offsetSeconds) {
         if (isNoPositiveInteger(offsetSeconds)) {
-            return "---"
+            return "------"
         }
     }
 
@@ -183,7 +183,7 @@ function clearAndReset() {
     offset_time_hours_field.value = "00";
     offset_time_minutes_field.value = "00";
     offset_time_seconds_field.value = "00";
-    result_diff_field.value = "---";
+    result_diff_field.value = "------";
 
     // Focus back to first field
     document.getElementById('start-time-hours-field').focus();

@@ -8,8 +8,9 @@ input {
     width: 40px;
 }
 
-#result-diff-minutes {
-    width: 80px;
+#result-diff-seconds {
+    width: 128px;
+    text-align: right;
 }
 
 #cache-button {
