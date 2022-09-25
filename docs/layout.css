@@ -8,7 +8,7 @@ input {
     width: 40px;
 }
 
-#result-diff-seconds {
+#result-diff-seconds, #offset-time-seconds-field {
     width: 128px;
     text-align: right;
 }
