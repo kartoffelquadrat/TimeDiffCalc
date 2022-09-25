@@ -118,8 +118,23 @@ async function produceTimeDelta() {
     last_start = "Start: " + startHours + ":" + addStringPadding(startMinutes) + ":" + addStringPadding(startSeconds);
     last_end = "End: " + endHours + ":" + addStringPadding(endMinutes) + ":" + addStringPadding(endSeconds);
     last_offset = "Offset: " + addStringPadding(offsetSeconds);
-    last_diff = "Diff: " + addStringPadding(diff);
+    last_diff = "Diff: " + addStringPadding(diff) + breakDownDiff(diff);
     return diff;
+}
+
+/**
+ * Converts pure second amount integer back to human readable HH:MM:SS string.
+ * @param seconds
+ */
+function breakDownDiff(diff_seconds) {
+
+    let bd_hours_int = Math.floor(diff_seconds / 3600);
+    let bd_hours = addStringPadding(bd_hours_int.toString())
+    let bd_minutes_int = addStringPadding(Math.floor((diff_seconds % 3600) / 60));
+    let bd_minutes = addStringPadding(bd_minutes_int.toString())
+    let bd_seconds_int = addStringPadding(diff_seconds % 60);
+    let bd_seconds = addStringPadding(bd_seconds_int.toString())
+    return " [" + bd_hours + ":" + bd_minutes + ":" + bd_seconds + "]";
 }
 
 function addStringPadding(string) {
