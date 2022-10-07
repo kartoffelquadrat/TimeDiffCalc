@@ -28,17 +28,19 @@
     <input type="text" id="end-time-minutes-field" maxlength="2" name="lname" value="">
     <input type="text" id="end-time-seconds-field" maxlength="2" name="lname" value=""> HH:MM:SS<br><br>
     <label>Optional Offset:</label><br>
-<!--    <input type="text" id="offset-time-hours-field" maxlength="2" name="lname" value="00">-->
-<!--    <input type="text" id="offset-time-minutes-field" maxlength="2" name="lname" value="00">-->
+    <!--    <input type="text" id="offset-time-hours-field" maxlength="2" name="lname" value="00">-->
+    <!--    <input type="text" id="offset-time-minutes-field" maxlength="2" name="lname" value="00">-->
     <input type="text" id="offset-time-seconds-field" maxlength="6" name="lname" value="00"> SSSSSS<br><br>
     <label>Time Diff (Seconds):</label><br>
     <input type="text" id="result-diff-seconds" name="lname" value="------" disabled> SSSSSS<br>
 </form>
 
 <h2 id="history-title">Marker Diff History</h2>
-<button id="reset-history" type="button">Reset History</button>
 <div id="hx">
 </div>
+<!--Reset button placed below history to prevent accidental removal.-->
+<button id="reset-history" class="btn, btn-outline, btn-lg" type="button">CLEAR</button>
+
 
 <script src="timeutils.js"></script>
 </body>

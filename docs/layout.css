@@ -18,11 +18,21 @@ input {
 }
 
 #history-title {
-    margin-bottom: 4;
+    margin-bottom: 4px;
 }
 
 #reset-history {
-    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius:8px;
+
+}
+
+#reset-history:hover {
+    background-color: #ff0000;
 }
 
 p {
