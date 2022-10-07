@@ -30,11 +30,14 @@ function registerElementListeners() {
     document.onkeydown = async function (evt) {
         evt = evt || window.event;
         if (evt.keyCode === 13) {
-
             clearAndReset()
         }
         // on every other key press update numbers without reset
-        else {
+        else if (evt.keyCode === 67) {
+            await sleep(50); // sleep required to prevent character from showing in input field after typing.
+            clearAndReset()
+            resetHistory();
+        } else {
             console.log("non enter press");
             await updateDiffField();
         }
