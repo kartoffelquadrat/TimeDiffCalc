@@ -32,11 +32,12 @@ function registerElementListeners() {
         if (evt.keyCode === 13) {
             clearAndReset()
         }
-        // on every other key press update numbers without reset
-        else if (evt.keyCode === 67) {
+        // on esc q press, clear everything
+        else if (evt.keyCode === 113) {
             await sleep(50); // sleep required to prevent character from showing in input field after typing.
             clearAndReset()
             resetHistory();
+        // on every other key press update numbers without reset
         } else {
             console.log("non enter press");
             await updateDiffField();
