@@ -41,3 +41,10 @@ p {
     margin-left: 10px;
     display: inline
 }
+
+.carryover {
+    background-color: white;
+}
+.carryover:hover {
+    box-shadow: inset 0 0 100px 100px rgba(64, 64, 64, 0.1);
+}

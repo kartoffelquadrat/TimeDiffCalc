@@ -206,6 +206,7 @@ function addToHistory() {
         offset_marker.innerText = last_offset
         const diff_marker = document.createElement('p')
         diff_marker.innerText = last_diff
+        diff_marker.classList.add("carryover")
 
         // Associate click listener to diff marker, so it can be easily carried on
         diff_marker.onclick = function () {
