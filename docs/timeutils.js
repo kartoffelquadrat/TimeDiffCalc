@@ -37,7 +37,7 @@ function registerElementListeners() {
             await sleep(50); // sleep required to prevent character from showing in input field after typing.
             clearAndReset()
             resetHistory();
-        // on every other key press update numbers without reset
+            // on every other key press update numbers without reset
         } else {
             console.log("non enter press");
             await updateDiffField();
@@ -127,7 +127,7 @@ async function produceTimeDelta() {
 }
 
 /**
- * Converts pure second amount integer back to human readable HH:MM:SS string.
+ * Converts pure second amount integer back to human-readable HH:MM:SS string.
  * @param seconds
  */
 function breakDownDiff(diff_seconds) {
@@ -206,6 +206,14 @@ function addToHistory() {
         offset_marker.innerText = last_offset
         const diff_marker = document.createElement('p')
         diff_marker.innerText = last_diff
+
+        // Associate click listener to diff marker, so it can be easily carried on
+        diff_marker.onclick = function () {
+            let diff_content = diff_marker.innerText;
+            let diff_value = diff_content.split(' ')[1];
+            // console.log(diff_value);
+            offset_time_seconds_field.value = diff_value;
+        }
 
         // add everything to container
         marker_container.appendChild(start_marker)
