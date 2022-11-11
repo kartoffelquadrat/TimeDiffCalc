@@ -33,7 +33,7 @@ function registerElementListeners() {
             clearAndReset()
         }
         // on esc q press, clear everything
-        else if (evt.keyCode === 113) {
+        else if (evt.keyCode === 27) {
             await sleep(50); // sleep required to prevent character from showing in input field after typing.
             clearAndReset()
             resetHistory();
