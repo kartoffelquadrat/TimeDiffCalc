@@ -11,7 +11,7 @@ This repo hosts a little helper calculator webpage written in plain HTML and Jav
 
 ## Usage
 
- * Open in [browser](https://kartoffelquadrat.github.io/TimeDiffCalc/).   
+ * Open in [browser](https://m5c.github.io/TimeDiffCalc/).   
  * If needed, add to iOS HomeScreen via sharing shortcut, to get an eternal app.  
 There is no remotely changing content, so the static page contents will work offline.
 
