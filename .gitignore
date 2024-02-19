@@ -3,6 +3,7 @@
 
 ### ELECTRON ###
 node_modules
+out
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
